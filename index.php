@@ -1,9 +1,9 @@
 <?php 
 require_once('./include/DB.php');
-require_once('./include/GetGame.php');
-if(isset($_GET['invite'])){
-	$gameID = $_GET['invite'];
-	$codes= GetGame::GetGameData($gameID);
+require_once('./include/GetGame.php'); 
+require_once('./include/StartingGame.php');
+if(!isset($_COOKIE['username'])){
+	setcookie('username','Not registerd', time() + (86400 * 30), "/");
 }
 ?>
 <!DOCTYPE html>
@@ -16,8 +16,11 @@ if(isset($_GET['invite'])){
 	<body>
 		<div class="root">
 			<div class="Alpha">
-				<?php if(isset($_GET['invite'])): // condition zero
-					 	if(DB::query('SELECT id FROM games WHERE id=:id',array(':id'=>$gameID))): // 1 ?>
+			<?php if(isset($_GET['invite'])): // condition zero
+				$gameID = $_GET['invite'];
+				$codes= GetGame::GetGameData($gameID);
+				if(StartGame::CheckGame($gameID,$_COOKIE['username'])):
+				?>
 				<div class="content">
 					<p> <?php echo $_COOKIE['username'] ?? "Spectator"; ?> Turn!</p>
 				</div>
@@ -29,17 +32,19 @@ if(isset($_GET['invite'])){
 					<?php } ?>
 				</div>	
 			</div>
-					<?php  else: ?>
-			<div class="content">
-				<p style="color:Red;">Wrong Code!</p>
-				<p>Join again</p>
-				<form method="GET" action="JoinGame.php"> 
-                    <input type="text" name="code" placeholder="Enter your invitation code"> 
-                    <input type="submit" value="Join Game!">
-                </form>    
+			<?php elseif(!StartGame::CheckGame($gameID,$_COOKIE['username'])): ?>
+				<div class="content">
+				<p style="color:green;">Wait For your friend to join the game!</p>
+				<?php else: ?>
+				<div class="content">
+					<p style="color:Red;">Wrong Code!</p>
+					<p>Join again</p>
+					<form method="GET" action="JoinGame.php"> 
+                   		<input type="text" name="code" placeholder="Enter your invitation code"> 
+                    	<input type="submit" value="Join Game!">
+					</form>    	
 			</div>
-			<?php endif; // ending condition 1
-				  else:?>
+				<?php endif; else:?>
 				<div class="content">
 				<p style="color:green;">Have a game?</p>
 				<p>Join it now</p>
