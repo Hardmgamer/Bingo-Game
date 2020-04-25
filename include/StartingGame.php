@@ -19,7 +19,7 @@ class StartGame{
             }
         }
         else{ // game does not exist
-            return "GameNotfound";
+            return "NotFound";
         }
     }
     private function AddPlayer($GameID){
