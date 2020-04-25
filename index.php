@@ -2,6 +2,7 @@
 require_once('./include/DB.php');
 require_once('./include/GetGame.php'); 
 require_once('./include/StartingGame.php');
+require_once('./include/Manager.php');
 if(!isset($_COOKIE['username'])){
 	setcookie('username','Not registerd', time() + (86400 * 30), "/");
 }
@@ -23,7 +24,7 @@ if(!isset($_COOKIE['username'])){
 				if(StartGame::CheckGame($gameID,$_COOKIE['username'])):
 				?>
 				<div class="content">
-					<p> <?php echo $_COOKIE['username'] ?? "Spectator"; ?> Turn!</p>
+					<p> <?php echo GameManager::TurnOperator($_GET['invite']); ?> Turn!</p>
 				</div>
 				<div class="container">
 					<?php foreach($codes as $code){?>
