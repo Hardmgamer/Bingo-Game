@@ -25,5 +25,13 @@ class StartGame{
     private function AddPlayer($GameID){
         DB::query('UPDATE games SET player2=:player WHERE id=:id',array(':id'=>$GameID,':player'=>$_COOKIE['username']));
     }
+    public static function CheckAvailability($GameID){
+        if(DB::query('SELECT id FROM games WHERE id=:id',array(':id'=>$GameID))){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
 ?>

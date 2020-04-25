@@ -1,7 +1,6 @@
 <?php
 class CreateGame {
     public static function Creator($Player1,$min=1,$max=50){
-        session_start();
         setcookie('username',$Player1, time() + (86400 * 30), "/");
         DB::query('INSERT INTO games VALUES(\'\',:player,\'\',0)',array(':player'=>$Player1));
         $gameID = DB::query('SELECT id FROM games ORDER BY id DESC LIMIT 1')[0];
@@ -13,9 +12,9 @@ class CreateGame {
         header('Location:'.$home_url);
     }
     private function CreateCodes($min, $max, $quantity) {
-    $numbers = range($min, $max);
-    shuffle($numbers);
-    return array_slice($numbers, 0, $quantity);
+        $numbers = range($min, $max);
+        shuffle($numbers);
+        return array_slice($numbers, 0, $quantity);
     }
 }
 ?>

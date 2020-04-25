@@ -19,7 +19,7 @@ if(!isset($_COOKIE['username'])){
 			<?php if(isset($_GET['invite'])): // condition zero
 				$gameID = $_GET['invite'];
 				$codes= GetGame::GetGameData($gameID);
-				if(StartGame::CheckGame($gameID,$_COOKIE) !== "NotFound"):
+				if(StartGame::CheckAvailability($gameID)):
 				if(StartGame::CheckGame($gameID,$_COOKIE['username'])):
 				?>
 				<div class="content">
