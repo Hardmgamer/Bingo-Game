@@ -1,0 +1,48 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+  font-family: 'Cairo', sans-serif;
+  color: #ccc;
+  font-weight: 600;
+
+}
+.root{
+  display: flex;
+  min-height: 100vh;
+  min-width: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: #212121;
+  flex-direction: column;
+}
+.content{
+  font-size: 24px;
+  margin: auto;
+  margin-bottom: 5vh;
+}
+.container{
+  min-height: 70vh;
+  min-width: 80vh;
+  background-color: #666;
+  display:grid;
+  grid-template-columns: repeat(5,1fr);
+  grid-template-rows: repeat(5,1fr);
+  margin-left:10px
+}
+.box{
+  grid-column: span 1 ;
+  border: 1px solid #333;
+  text-align: center;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 34px;
+}
+.Alpha{
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  
+}
