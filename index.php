@@ -16,23 +16,38 @@ if(isset($_GET['invite'])){
 	<body>
 		<div class="root">
 			<div class="Alpha">
-				<?php if($_GET['invite']): ?>
+				<?php if(isset($_GET['invite'])): // condition zero
+					 	if(DB::query('SELECT id FROM games WHERE id=:id',array(':id'=>$gameID))): // 1 ?>
 				<div class="content">
-					<p>$Player Turn!</p>
+					<p> <?php echo $_COOKIE['username'] ?? "Spectator"; ?> Turn!</p>
 				</div>
 				<div class="container">
-					<?php foreach($codes as $code):?>
+					<?php foreach($codes as $code){?>
 					<div class="box">
-						<p><?php echo $code['code'] ?></p>
+						<p><?php echo $code['code']; ?></p>
 					</div>
-					<?php endforeach?>
+					<?php } ?>
 				</div>	
 			</div>
-			<?php else: ?>
+					<?php  else: ?>
 			<div class="content">
-				<p>No invitation code!</p>
+				<p style="color:Red;">Wrong Code!</p>
+				<p>Join again</p>
+				<form method="GET" action="JoinGame.php"> 
+                    <input type="text" name="code" placeholder="Enter your invitation code"> 
+                    <input type="submit" value="Join Game!">
+                </form>    
 			</div>
-			<?php endif ?>
+			<?php endif; // ending condition 1
+				  else:?>
+				<div class="content">
+				<p style="color:green;">Have a game?</p>
+				<p>Join it now</p>
+				<form method="GET" action="JoinGame.php"> 
+                    <input type="text" name="code" placeholder="Enter your invitation code"> 
+                    <input type="submit" value="Join Game!">
+				</form>  
+			<?php endif; //ending condition zero ?>  
 		</div>
 	</body>
 </html>

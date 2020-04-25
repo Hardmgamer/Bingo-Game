@@ -6,7 +6,7 @@ class GetGame{
             return $codes;
         }
         else{
-            die('Error occured');
+            return false;
         }
     }
 }

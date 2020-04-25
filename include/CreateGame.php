@@ -2,7 +2,7 @@
 class CreateGame {
     public static function Creator($Player1,$min=1,$max=50){
         session_start();
-        $_SESSION['Player']=$Player1;
+        setcookie('username',$Player1, time() + (86400 * 30), "/");
         DB::query('INSERT INTO games VALUES(\'\',:player,\'\',0)',array(':player'=>$Player1));
         $gameID = DB::query('SELECT id FROM games ORDER BY id DESC LIMIT 1')[0];
         $codes = CreateGame::CreateCodes($min,$max,25);
