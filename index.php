@@ -1,26 +1,29 @@
 <?php 
 require_once('./include/DB.php');
-require_once('./include/random.php');
-$numbers = gen::randomGen(1,50,25);
+require_once('./include/GetGame.php');
+if(isset($_GET['invite'])){
+	$gameID = $_GET['invite'];
+	$codes= GetGame::GetGameData($gameID);
+}
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<title>Play Bingo</title>
 		<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700&display=swap" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="bingocss.css">
+		<link rel="stylesheet" type="text/css" href="./layout/css/bingocss.css">
 	</head>
 	<body>
 		<div class="root">
 			<div class="Alpha">
 				<?php if($_GET['invite']): ?>
 				<div class="content">
-					<p>realMoSalah Turn!</p>
+					<p>$Player Turn!</p>
 				</div>
 				<div class="container">
-					<?php foreach($numbers as $number):?>
+					<?php foreach($codes as $code):?>
 					<div class="box">
-						<p><?php echo $number ?></p>
+						<p><?php echo $code['code'] ?></p>
 					</div>
 					<?php endforeach?>
 				</div>	
