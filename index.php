@@ -8,7 +8,9 @@ if(isset($_GET['invite'])){
 	if(StartGame::CheckAvailability($_GET['invite'])){
 		if(StartGame::CheckGame($_GET['invite'],$_COOKIE['username'])){
 			if(!DB::query('SELECT * FROM codesrepo WHERE username=:username AND game=:game',array(':username'=>$_COOKIE['username'],':game'=>$_GET['invite']))){
-				setcookie('username','Guest', time() + (86400 * 30), "/");
+				if(!isset($_COOKIE['username'])){
+					setcookie('username','Guest', time() + (86400 * 30), "/");
+				}
 				CreateGame::Guest($_GET['invite']);
 			}
 		}
