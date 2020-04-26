@@ -1,12 +1,15 @@
 <?php
 class CreateGame {
-    public static function Creator($Player1,$min=1,$max=50){
-        setcookie('username',$Player1, time() + (86400 * 30), "/");
-        DB::query('INSERT INTO games VALUES(\'\',:player,\'\',0)',array(':player'=>$Player1));
+    public static function Creator($player,$min=1,$max=50,$create=0){
+        setcookie('username',$player, time() + (86400 * 30), "/");
+        DB::query('INSERT INTO games VALUES(\'\',:player,\'\',0)',array(':player'=>$player));
         $gameID = DB::query('SELECT id FROM games ORDER BY id DESC LIMIT 1')[0];
         $codes = CreateGame::CreateCodes($min,$max,25);
         foreach($codes as $code){
-            DB::query('INSERT INTO codesrepo VALUES(\'\',:game,:code,0)',array(':game'=>$gameID[0],':code'=>$code));
+            DB::query('INSERT INTO codesrepo VALUES(\'\',:game,:code,:player,0)',array(':game'=>$gameID[0],':code'=>$code,':player'=>$player));
+        }
+        if($create==1){
+            GameManager::RoundCreator($gameID[0],$player);
         }
         $home_url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/index.php?invite='.$gameID[0];
         header('Location:'.$home_url);
@@ -15,6 +18,12 @@ class CreateGame {
         $numbers = range($min, $max);
         shuffle($numbers);
         return array_slice($numbers, 0, $quantity);
+    }
+    public static function Guest($gameID){
+        $codes = CreateGame::CreateCodes($min=1,$max=50,25);
+        foreach($codes as $code){
+            DB::query('INSERT INTO codesrepo VALUES(\'\',:game,:code,:Player,0)',array(':game'=>$gameID,':code'=>$code,':Player'=>$_COOKIE['username']));
+        }
     }
 }
 ?>

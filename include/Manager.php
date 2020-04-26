@@ -1,4 +1,5 @@
 <?php
+require_once('./include/StartingGame.php');
 class GameManager{
     public static function RoundCreator($gameID,$CurrentPlayer){
         $Player1=DB::query('SELECT player1 FROM games WHERE id=:id',array(':id'=>$gameID))[0]['player1'];
@@ -30,6 +31,16 @@ class GameManager{
         }
         else{
             return false;
+        }
+    }
+    public static function VerifyCode($gameID,$enterd){
+        if(DB::query('SELECT code FROM codesrepo WHERE game=:game AND code=:code AND username != :player',array(':game'=>$gameID,':player'=>GameManager::TurnOperator($gameID),':code'=>$enterd))){
+            $dot="#";
+            DB::query('UPDATE codesrepo SET code=:DOT, checked=1 WHERE game=:game AND code=:code AND username != :username',array(':DOT'=>$dot,':game'=>$gameID,':username'=>GameManager::TurnOperator($gameID),':code'=>$enterd));
+            return GameManager::RoundCreator($gameID,$_COOKIE['username']);
+        }
+        else{
+            return GameManager::RoundCreator($gameID,$_COOKIE['username']);
         }
     }
 }

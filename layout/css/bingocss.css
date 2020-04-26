@@ -68,4 +68,11 @@ input[type="submit"]{
   color: white;
   padding: 4px 22px;
 }
-
+.GetData input[type="text"]{
+  width: 30%;
+}
+.GetData input[type="submit"]{
+margin-right:0;
+margin-top:5px;
+margin-left: 5%;
+}

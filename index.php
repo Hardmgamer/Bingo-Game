@@ -2,9 +2,17 @@
 require_once('./include/DB.php');
 require_once('./include/GetGame.php'); 
 require_once('./include/StartingGame.php');
+require_once('./include/CreateGame.php');
 require_once('./include/Manager.php');
-if(!isset($_COOKIE['username'])){
-	setcookie('username','Not registerd', time() + (86400 * 30), "/");
+if(isset($_GET['invite'])){
+	if(StartGame::CheckAvailability($_GET['invite'])){
+		if(StartGame::CheckGame($_GET['invite'],$_COOKIE['username'])){
+			if(!DB::query('SELECT * FROM codesrepo WHERE username=:username AND game=:game',array(':username'=>$_COOKIE['username'],':game'=>$_GET['invite']))){
+				setcookie('username','Guest', time() + (86400 * 30), "/");
+				CreateGame::Guest($_GET['invite']);
+			}
+		}
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -22,7 +30,15 @@ if(!isset($_COOKIE['username'])){
 				$codes= GetGame::GetGameData($gameID);
 				if(StartGame::CheckAvailability($gameID)):
 				if(StartGame::CheckGame($gameID,$_COOKIE['username'])):
-				?>
+				if(GameManager::TurnOperator($_GET['invite']) == $_COOKIE['username']): ?>
+				<div class="GetData">
+				<form method="POST" action="submitanswer.php">
+					<input type="text" name="code" placeholder="Your Answer"> 
+					<input name="id" type="hidden" value="<?php echo $_GET['invite']; ?>">
+              	    <input type="submit" value="Submit">
+				</form>
+				</div>
+			 	<?php endif ?>
 				<div class="content">
 					<p> <?php echo GameManager::TurnOperator($_GET['invite']); ?> Turn!</p>
 				</div>
