@@ -5,52 +5,57 @@ require_once('./include/StartingGame.php');
 require_once('./include/CreateGame.php');
 require_once('./include/Manager.php');
 if(isset($_GET['invite'])){
+	$gameID = $_GET['invite'];
 	if(StartGame::CheckAvailability($_GET['invite'])){
+		if(!isset($_COOKIE['username'])){
+			setcookie('username','Guest', time() + (86400 * 30), "/");
+		}
 		if(StartGame::CheckGame($_GET['invite'],$_COOKIE['username'])){
 			if(!DB::query('SELECT * FROM codesrepo WHERE username=:username AND game=:game',array(':username'=>$_COOKIE['username'],':game'=>$_GET['invite']))){
-				if(!isset($_COOKIE['username'])){
-					setcookie('username','Guest', time() + (86400 * 30), "/");
-				}
+
 				CreateGame::Guest($_GET['invite']);
 			}
 		}
 	}
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<title>Play Bingo</title>
+		<?php 
+		if(isset($_GET['invite'])):
+			if(StartGame::CheckAvailability($_GET['invite'])):
+		?>
+		<script
+ 			src="https://code.jquery.com/jquery-3.4.1.min.js"
+  			integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  			crossorigin="anonymous">
+		</script>
+		<script src="./layout/js/refesh.js"></script>
+		<?php 
+		endif; endif;
+		?>
 		<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700&display=swap" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="./layout/css/bingocss.css">
 	</head>
 	<body>
-		<div class="root">
+			<div class="root" CurrentPlayer="2" PlayerPlaying="2">
+				<div class="verify">
+					<!-- Loading Verifications-->
+				</div>
 			<div class="Alpha">
 			<?php if(isset($_GET['invite'])): // condition zero
-				$gameID = $_GET['invite'];
-				$codes= GetGame::GetGameData($gameID);
 				if(StartGame::CheckAvailability($gameID)):
 				if(StartGame::CheckGame($gameID,$_COOKIE['username'])):
-				if(GameManager::TurnOperator($_GET['invite']) == $_COOKIE['username']): ?>
-				<div class="GetData">
-				<form method="POST" action="submitanswer.php">
-					<input type="text" name="code" placeholder="Your Answer"> 
-					<input name="id" type="hidden" value="<?php echo $_GET['invite']; ?>">
-              	    <input type="submit" value="Submit">
-				</form>
+				?>
+				<div class="Answer">
+				<!-- Loading From SumbittionLoader -->
 				</div>
-			 	<?php endif ?>
-				<div class="content">
-					<p> <?php echo GameManager::TurnOperator($_GET['invite']); ?> Turn!</p>
+				<div class="game" id="gameid" gameid="<?php echo $_GET['invite'] ?>">
+				 <!-- Loading game content from GameLoader-->
 				</div>
-				<div class="container">
-					<?php foreach($codes as $code){?>
-					<div class="box">
-						<p><?php echo $code['code']; ?></p>
-					</div>
-					<?php } ?>
-				</div>	
 			</div>
 			<?php elseif(!StartGame::CheckGame($gameID,$_COOKIE['username'])): ?>
 				<div class="content">
@@ -63,7 +68,7 @@ if(isset($_GET['invite'])){
                    		<input type="text" name="code" placeholder="Enter your invitation code"> 
                     	<input type="submit" value="Join Game!">
 					</form>    	
-			</div>
+				</div>
 				<?php endif; else:?>
 				<div class="content">
 				<p style="color:green;">Have a game?</p>

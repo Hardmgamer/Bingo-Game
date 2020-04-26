@@ -23,12 +23,13 @@ DROP TABLE IF EXISTS `codesrepo`;
 CREATE TABLE `codesrepo` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `game` int(11) unsigned NOT NULL,
-  `code` int(3) DEFAULT NULL,
+  `code` char(10) DEFAULT NULL,
+  `username` text DEFAULT NULL,
   `checked` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `gameid` (`game`),
   CONSTRAINT `codesrepo_ibfk_1` FOREIGN KEY (`game`) REFERENCES `games` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=426 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1652 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `games` */
 
@@ -40,7 +41,20 @@ CREATE TABLE `games` (
   `player2` text DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4;
+
+/*Table structure for table `turnlog` */
+
+DROP TABLE IF EXISTS `turnlog`;
+
+CREATE TABLE `turnlog` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `gameid` int(11) DEFAULT NULL,
+  `player` text DEFAULT NULL,
+  `number` int(3) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8mb4;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
