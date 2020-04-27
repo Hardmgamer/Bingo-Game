@@ -4,12 +4,12 @@ require_once('./include/GetGame.php');
 require_once('./include/StartingGame.php');
 require_once('./include/CreateGame.php');
 require_once('./include/Manager.php');
+if(!isset($_COOKIE['username'])){
+	setcookie('username','Guest', time() + (86400 * 30), "/");
+}
 if(isset($_GET['invite'])){
 	$gameID = $_GET['invite'];
 	if(StartGame::CheckAvailability($_GET['invite'])){
-		if(!isset($_COOKIE['username'])){
-			setcookie('username','Guest', time() + (86400 * 30), "/");
-		}
 		if(StartGame::CheckGame($_GET['invite'],$_COOKIE['username'])){
 			if(!DB::query('SELECT * FROM codesrepo WHERE username=:username AND game=:game',array(':username'=>$_COOKIE['username'],':game'=>$_GET['invite']))){
 				CreateGame::Guest($_GET['invite']);
