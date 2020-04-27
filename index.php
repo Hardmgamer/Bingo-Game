@@ -52,10 +52,10 @@ if(isset($_GET['invite'])){
 				?>
 				<div class="Answer" current="<?php if(GameManager::TurnOperator($gameID)==$_COOKIE['username']){echo 1;} else{echo 2;}?>">
 				<?php include('./Answer.php');?>
-				<!-- Loading From SumbittionLoader -->
+				<!-- Loading From Answer Loader -->
 				</div>
 				<div class="game" id="gameid" gameid="<?php echo $_GET['invite'] ?>">
-				 <!-- Loading game content from GameLoader-->
+				 <!-- Loading game content from Game Loader-->
 				</div>
 				<div class="Submit">
 				<div class="button">BINGO!</div>
