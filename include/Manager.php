@@ -36,8 +36,10 @@ class GameManager{
     public static function VerifyCode($gameID,$enterd){
         if(DB::query('SELECT code FROM codesrepo WHERE game=:game AND code=:code',array(':game'=>$gameID,':code'=>$enterd))){
             $dot="#";
+            if(GameManager::TurnOperator($gameID)==$_COOKIE['username']){
             DB::query('UPDATE codesrepo SET code=:DOT, checked=1 WHERE game=:game AND code=:code',array(':DOT'=>$dot,':game'=>$gameID,':code'=>$enterd));
             return GameManager::RoundCreator($gameID,$_COOKIE['username']);
+            }
         }
         else{
             return GameManager::RoundCreator($gameID,$_COOKIE['username']);

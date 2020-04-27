@@ -33,6 +33,7 @@ if(isset($_GET['invite'])){
   			crossorigin="anonymous">
 		</script>
 		<script src="./layout/js/refesh.js"></script>
+		<script src="./layout/js/sendreq.js"></script>
 		<?php 
 		endif; endif;
 		?>
@@ -49,11 +50,15 @@ if(isset($_GET['invite'])){
 				if(StartGame::CheckAvailability($gameID)):
 				if(StartGame::CheckGame($gameID,$_COOKIE['username'])):
 				?>
-				<div class="Answer">
+				<div class="Answer" current="<?php if(GameManager::TurnOperator($gameID)==$_COOKIE['username']){echo 1;} else{echo 2;}?>">
+				<?php include('./Answer.php');?>
 				<!-- Loading From SumbittionLoader -->
 				</div>
 				<div class="game" id="gameid" gameid="<?php echo $_GET['invite'] ?>">
 				 <!-- Loading game content from GameLoader-->
+				</div>
+				<div class="Submit">
+				<div class="button">BINGO!</div>
 				</div>
 			</div>
 			<?php elseif(!StartGame::CheckGame($gameID,$_COOKIE['username'])): ?>

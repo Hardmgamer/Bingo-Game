@@ -21,7 +21,6 @@
 }
 .content{
   font-size: 24px;
-  margin: auto;
   margin-bottom: 5vh;
 }
 .container{
@@ -44,7 +43,7 @@
 }
 .Alpha{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-self: center;
   justify-content: center;  
 }
@@ -68,11 +67,38 @@ input[type="submit"]{
   color: white;
   padding: 4px 22px;
 }
-.GetData input[type="text"]{
-  width: 30%;
+.Answer,.Submit{
+flex-basis: 25%;
+justify-content: center;
+display: flex;
+align-items: center;
 }
-.GetData input[type="submit"]{
-margin-right:0;
-margin-top:5px;
-margin-left: 5%;
+.game{
+  margin-right:80px;
+  flex-basis: 50%;
+  padding:0 0 0 5%;
+}
+.GetData{
+  display:grid;
+  grid-template-columns: repeat(5,1fr);
+  grid-template-rows: repeat(5,1fr);
+}
+.btn{
+  padding:0 5px;
+  border:2px solid #000;
+  background-color:#3e3e3e;
+  font-size:30px;
+  cursor: pointer;
+  margin-left:4px;
+  margin-bottom: 3px;
+}
+.GetData .btn:last-child(){
+  margin-left:0;
+}
+.button{
+  cursor: pointer;
+  color:white;
+  padding:20px 25px;
+  font-size: 30px;
+  background-color: firebrick;
 }

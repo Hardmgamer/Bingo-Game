@@ -4,14 +4,14 @@ require_once('./include/GetGame.php');
 require_once('./include/StartingGame.php');
 require_once('./include/CreateGame.php');
 require_once('./include/Manager.php');
-
+$codes = DB::query('SELECT code FROM codesrepo WHERE game=:gameID AND username =:username AND checked != 1 ORDER BY code ASC',array(':gameID'=>$_GET['invite'],':username'=>$_COOKIE['username']));
+sort($codes);
+$clength = count($codes);
 ?>
-<?php if(GameManager::TurnOperator($_GET['invite']) == $_COOKIE['username']): ?>
+	<?php if(GameManager::TurnOperator($_GET['invite'])==$_COOKIE['username']){ ?>
 	<div class="GetData">
-				<form method="POST" action="submitanswer.php">
-					<input type="text" name="code" placeholder="Your Answer"> 
-					<input name="id" type="hidden" value="<?php echo $_GET['invite']; ?>">
-              	    <input type="submit" value="Submit">
-				</form>
+	<?php for($x = 0; $x < $clength; $x++):?>
+		<div class="btn" code="<?php echo $codes[$x]['code']?>"><?php echo $codes[$x]['code'] ?></div>
+	<?php endfor; ?>
+	<?php }?>
 	</div>
-<?php endif ?>

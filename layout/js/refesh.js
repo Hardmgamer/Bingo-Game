@@ -1,16 +1,17 @@
 $(document).ready(function(){  
-    loadreload()
+    checker();
     loadstation();
 });
 
 function loadstation(){
     var link = $('.game').attr("gameid");
     $('.game').load("Game.php?invite="+link);
-        $('.Answer').load("Answer.php?invite="+link);
     setTimeout(loadstation, 2000);
 }
-function loadreload(){
-    var link = $('.game').attr("gameid");
-    $('.verify').load("reload.php?invite="+link);
-    setTimeout(loadreload, 2000);
+function checker(){
+var link = $('.game').attr("gameid");
+if($(".Answer > div").length==0){
+    $('.Answer').load("Answer.php?invite="+link);
+}
+setTimeout(checker, 2000);
 }
