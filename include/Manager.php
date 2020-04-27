@@ -25,8 +25,9 @@ class GameManager{
     }
     public static function TurnOperator($gameID){
         if(StartGame::CheckAvailability($gameID)){
-            if(DB::query('SELECT status FROM turnlog WHERE gameid=:game AND id= (SELECT MAX(id) FROM turnlog)',array(':game'=>$gameID))){
-                return DB::query('SELECT player FROM turnlog WHERE gameid=:game AND id=(SELECT MAX(id) FROM turnlog)',array(':game'=>$gameID))[0]['player'];
+            if(DB::query('SELECT status FROM turnlog WHERE gameid=:game',array(':game'=>$gameID))){
+                $MaxID=DB::query('SELECT MAX(id) FROM turnlog WHERE gameid=:game',array(':game'=>$gameID))[0]['MAX(id)'];
+                return DB::query('SELECT player FROM turnlog WHERE gameid=:game AND id=:alt',array(':game'=>$gameID,':alt'=>$MaxID))[0]['player'];
             }
         }
         else{
