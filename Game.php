@@ -12,7 +12,12 @@ $codes= GetGame::GetGameData($_GET['invite']);
 				<div class="container">
 					<?php foreach($codes as $code){?>
 					<div class="box">
-						<p><?php echo $code['code']; ?></p>
+						<p><?php if($code['checked'] == 1):
+								echo "#";
+						else:
+							echo $code['code'];
+						endif;
+							?></p>
 					</div>
 					<?php } ?>
 				</div>

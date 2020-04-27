@@ -8,6 +8,10 @@ class CreateGame {
         foreach($codes as $code){
             DB::query('INSERT INTO codesrepo VALUES(\'\',:game,:code,:player,0)',array(':game'=>$gameID[0],':code'=>$code,':player'=>$player));
         }
+        shuffle($codes);
+        foreach($codes as $code){
+            DB::query('INSERT INTO codesrepo VALUES(\'\',:game,:code,\'\',0)',array(':game'=>$gameID[0],':code'=>$code));
+        }
         if($create==1){
             GameManager::RoundCreator($gameID[0],$player);
         }
@@ -20,10 +24,7 @@ class CreateGame {
         return array_slice($numbers, 0, $quantity);
     }
     public static function Guest($gameID){
-        $codes = CreateGame::CreateCodes($min=1,$max=50,25);
-        foreach($codes as $code){
-            DB::query('INSERT INTO codesrepo VALUES(\'\',:game,:code,:Player,0)',array(':game'=>$gameID,':code'=>$code,':Player'=>$_COOKIE['username']));
-        }
+            DB::query('UPDATE codesrepo SET username=:username WHERE game=:game AND username=""',array(':username'=>$_COOKIE['username'],':game'=>$gameID));
     }
 }
 ?>

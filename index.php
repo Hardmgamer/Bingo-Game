@@ -12,7 +12,6 @@ if(isset($_GET['invite'])){
 		}
 		if(StartGame::CheckGame($_GET['invite'],$_COOKIE['username'])){
 			if(!DB::query('SELECT * FROM codesrepo WHERE username=:username AND game=:game',array(':username'=>$_COOKIE['username'],':game'=>$_GET['invite']))){
-
 				CreateGame::Guest($_GET['invite']);
 			}
 		}
