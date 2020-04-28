@@ -48,7 +48,6 @@ if(isset($_GET['invite'])){
 				if(StartGame::CheckGame($gameID,$_COOKIE['username'])):
 				?>
 				<div class="Answer">
-				<?php include('./Answer.php');?>
 				<!-- Loading From Answer Loader -->
 				</div>
 				<div class="game" id="gameid" gameid="<?php echo $_GET['invite'] ?>">

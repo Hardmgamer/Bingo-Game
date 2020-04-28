@@ -4,7 +4,6 @@ class GameManager{
     public static function RoundCreator($gameID,$CurrentPlayer){
         $Player1=DB::query('SELECT player1 FROM games WHERE id=:id',array(':id'=>$gameID))[0]['player1'];
         $Player2=DB::query('SELECT player2 FROM games WHERE id=:id',array(':id'=>$gameID))[0]['player2'];
-        echo $Player2;
         if($CurrentPlayer==$Player1 || $CurrentPlayer == $Player2 ){
             if(!DB::query('SELECT id FROM turnlog WHERE gameid=:game',array(':game'=>$gameID))){
                 return DB::query('INSERT INTO turnlog VALUES(\'\',:id,:player,\'\',0)',array(':id'=>$gameID,':player'=>$Player1));
@@ -36,13 +35,13 @@ class GameManager{
     }
     public static function VerifyCode($gameID,$enterd){
         if(DB::query('SELECT code FROM codesrepo WHERE game=:game AND code=:code',array(':game'=>$gameID,':code'=>$enterd))){
-            if(GameManager::TurnOperator($gameID)==$_COOKIE['username']){
+            if(self::TurnOperator($gameID)==$_COOKIE['username']){
             DB::query('UPDATE codesrepo SET checked=1 WHERE game=:game AND code=:code',array(':game'=>$gameID,':code'=>$enterd));
-            return GameManager::RoundCreator($gameID,$_COOKIE['username']);
+            return self::RoundCreator($gameID,$_COOKIE['username']);
             }
         }
         else{
-            return GameManager::RoundCreator($gameID,$_COOKIE['username']);
+            return self::RoundCreator($gameID,$_COOKIE['username']);
         }
     }
 }

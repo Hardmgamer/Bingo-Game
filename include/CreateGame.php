@@ -4,7 +4,7 @@ class CreateGame {
         setcookie('username',$player, time() + (86400 * 30), "/");
         DB::query('INSERT INTO games VALUES(\'\',:player,\'\',0)',array(':player'=>$player));
         $gameID = DB::query('SELECT id FROM games ORDER BY id DESC LIMIT 1')[0];
-        $codes = CreateGame::CreateCodes($min,$max,25);
+        $codes = self::CreateCodes($min,$max,25);
         foreach($codes as $code){
             DB::query('INSERT INTO codesrepo VALUES(\'\',:game,:code,:player,0)',array(':game'=>$gameID[0],':code'=>$code,':player'=>$player));
         }

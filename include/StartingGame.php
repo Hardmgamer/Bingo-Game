@@ -14,7 +14,7 @@ class StartGame{
                 }
             }
             elseif(DB::query('SELECT player1 FROM games WHERE id=:id AND  player2 != :player',array(':id'=>$GameID,':player'=>$Player))){
-                StartGame::AddPlayer($GameID);
+                self::AddPlayer($GameID);
                 return true;
             }
         }
