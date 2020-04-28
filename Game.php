@@ -6,7 +6,7 @@ require_once('./include/CreateGame.php');
 require_once('./include/Manager.php');
 $codes= GetGame::GetGameData($_GET['invite']);
 ?>
-				<div class="content" data="<?php if(GameManager::TurnOperator($_GET['invite'])==$_COOKIE['username']){echo 1;}else{echo 2;}?>">
+				<div class="content">
 					<p> <?php echo GameManager::TurnOperator($_GET['invite']); ?> Turn!🤯</p>
 				</div>
 				<div class="container">
