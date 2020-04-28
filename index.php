@@ -41,16 +41,13 @@ if(isset($_GET['invite'])){
 		<link rel="stylesheet" type="text/css" href="./layout/css/bingocss.css">
 	</head>
 	<body>
-			<div class="root" CurrentPlayer="2" PlayerPlaying="2">
-				<div class="verify">
-					<!-- Loading Verifications-->
-				</div>
+			<div class="root">
 			<div class="Alpha">
 			<?php if(isset($_GET['invite'])): // condition zero
 				if(StartGame::CheckAvailability($gameID)):
 				if(StartGame::CheckGame($gameID,$_COOKIE['username'])):
 				?>
-				<div class="Answer" current="<?php if(GameManager::TurnOperator($gameID)==$_COOKIE['username']){echo 1;} else{echo 2;}?>">
+				<div class="Answer">
 				<?php include('./Answer.php');?>
 				<!-- Loading From Answer Loader -->
 				</div>
