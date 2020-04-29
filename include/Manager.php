@@ -44,5 +44,13 @@ class GameManager{
             return self::RoundCreator($gameID,$_COOKIE['username']);
         }
     }
+    public static function VerifyExistance($gameID){
+        if(DB::query('SELECT status FROM games WHERE id=:id',array(':id'=>$gameID)) == 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
 ?>
