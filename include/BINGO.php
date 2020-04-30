@@ -8,7 +8,11 @@ class BINGO{
             }
          }
     }
-    private function CalcRow($Code,$verified=0,$row=0,$N=5){ // N Is the Number of rows/Columns When Row = Columns (in case of 4*4 game or 3*3 game) Default is 5*5
+    /* N Is the Number of rows/Columns When Row = Columns
+       in case of 4*4 game or 3*3 game pass the N Paramater with your version
+       Default is 5*5
+    */
+    private function CalcRow($Code,$N=5,$verified=0,$row=0){
         for($i=0;$i<=($N*($N-1));$i+=$N){
             for($j=$i; $j<$i+$N;$j++){
                 if($Code[$j]['checked']==1){
@@ -22,7 +26,11 @@ class BINGO{
         }
         return $verified;
     }
-    private function CalcColumn($Code,$verified=0,$column=0,$N=5){ // N Is the Number of rows/Columns When Row = Columns (in case of 4*4 game or 3*3 game) Default is 5*5
+    /* N Is the Number of rows/Columns When Row = Columns
+       in case of 4*4 game or 3*3 game pass the N Paramater with your version
+       Default is 5*5
+    */
+    private function CalcColumn($Code,$N=5,$verified=0,$column=0){
         for($i=0;$i<$N;$i++){
             for($j=$i;$j<=$i+($N*($N-1));$j+=$N){
                 if($Code[$j]['checked']==1){
@@ -36,7 +44,11 @@ class BINGO{
         }
         return $verified;
     }
-    private function CalcTendon($Code,$verified=0,$tendon=0,$N=5){ // N Is the Number of rows/Columns When Row = Columns (in case of 4*4 game or 3*3 game) Default is 5*5
+    /* N Is the Number of rows/Columns When Row = Columns
+       in case of 4*4 game or 3*3 game pass the N Paramater with your version
+       Default is 5*5
+    */
+    private function CalcTendon($Code,$N=5,$verified=0,$tendon=0){ 
         for($i=0; $i<=($N*($N-1));$i+=($N*($N-1))){
             if($i==0){
                 for($j=$i;$j<=(($N*$N)-1);$j+=$N+1){

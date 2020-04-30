@@ -1,9 +1,5 @@
 <?php
-require_once('./include/DB.php');
-require_once('./include/GetGame.php'); 
-require_once('./include/StartingGame.php');
-require_once('./include/CreateGame.php');
-require_once('./include/Manager.php');
+require_once("./include/header.php");
 $codes = DB::query('SELECT code FROM codesrepo WHERE game=:gameID AND username =:username AND checked != 1 ORDER BY code ASC',array(':gameID'=>$_GET['invite'],':username'=>$_COOKIE['username']));
 sort($codes);
 $clength = count($codes);

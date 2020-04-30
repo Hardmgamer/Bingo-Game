@@ -1,9 +1,5 @@
 <?php 
-require_once('./include/DB.php');
-require_once('./include/GetGame.php'); 
-require_once('./include/StartingGame.php');
-require_once('./include/CreateGame.php');
-require_once('./include/Manager.php');
+require_once("./include/header.php");
 if(!isset($_COOKIE['username'])){
 	setcookie('username','Guest', time() + (86400 * 30), "/");
 }

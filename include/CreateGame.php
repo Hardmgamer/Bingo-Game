@@ -18,7 +18,7 @@ class CreateGame {
         $home_url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/index.php?invite='.$gameID[0];
         header('Location:'.$home_url);
     }
-    private function CreateCodes($min, $max, $quantity) {
+    protected function CreateCodes($min, $max, $quantity) {
         $numbers = range($min, $max);
         shuffle($numbers);
         return array_slice($numbers, 0, $quantity);
